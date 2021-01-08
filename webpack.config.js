@@ -1,4 +1,5 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const DashboardPlugin = require("webpack-dashboard");
 const path = require("path");
 const buildPath = "dist";
 
@@ -47,7 +48,8 @@ module.exports = {
             template: path.join(__dirname, "public/index.html"),
             title: "rt-demo",
             filename: "index.html"
-        })
+        }),
+        new DashboardPlugin(dashboard.setData)
     ],
     // devtool: "inline-source-map",
     devtool: "nosources-source-map",

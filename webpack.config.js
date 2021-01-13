@@ -2,7 +2,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const {
   CleanWebpackPlugin
 } = require("clean-webpack-plugin");
-const { DefinePlugin } = require("webpack");
+const { DefinePlugin, optimize } = require("webpack");
 
 const path = require("path");
 const chalk = require("chalk");
@@ -63,6 +63,12 @@ module.exports = env => {
         title: appConfig.title,
       }),
       new CleanWebpackPlugin(),
+      new optimize.AggressiveSplittingPlugin({
+        minSize: 30000,
+        maxSize: 50000,
+        chunkOverhead: 0,
+        entryChunkMultiplicator: 1
+      }),
       new DefinePlugin({
           'process.env': {
             NODE_ENV: JSON.stringify(NODE_ENV),

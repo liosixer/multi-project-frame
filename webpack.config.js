@@ -1,61 +1,81 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const DashboardPlugin = require("webpack-dashboard");
+const {
+  CleanWebpackPlugin
+} = require("clean-webpack-plugin");
+const { DefinePlugin } = require("webpack");
+
 const path = require("path");
+const chalk = require("chalk");
 const buildPath = "dist";
 
-const { NODE_ENV } = process;
-const isDevelopment = NODE_ENV == "development";
-
-const devtool = isDevelopment ? "eval-source-map" : "hidden-source-map";
-
-module.exports = {
-    entry: path.resolve(__dirname, "src/index.tsx"),
+module.exports = env => {
+  const { NODE_ENV, APP } = env;
+  console.log(chalk.yellow(`当前环境变量：${NODE_ENV}; APP:${APP}`));
+  
+  const isDevelopment = NODE_ENV == "development";
+  const appConfig = require(`./config/${APP}`);
+  const envConfig = require("./config/env");
+  return {
+    entry: path.resolve(__dirname, `src/projects/${APP}/index.tsx`),
     output: {
-        path: path.resolve(__dirname, buildPath),
-        filename: "[name].[chunkhash:8].js"
+      path: path.resolve(__dirname, `${buildPath}/${APP}`),
+      filename: "[name].[chunkhash:4].js"
+    },
+    resolve: {
+      alias: {
+        "@": path.resolve(__dirname, "src"),
+      }
     },
     module: {
-        rules: [{
-                test: /\.(js|ts)x?$/,
-                exclude: /(node_modules)/,
-                use: {
-                    loader: "babel-loader"
-                }
-            },
+      rules: [{
+          test: /\.(js|ts)x?$/,
+          exclude: /(node_modules)/,
+          use: {
+            loader: "babel-loader"
+          }
+        },
+        {
+          test: /\.(c|sc|sa)ss$/,
+          use: [
+            'style-loader',
+            'css-loader',
             {
-                test: /\.(c|sc|sa)ss$/,
-                use: [
-                    'style-loader',
-                    'css-loader',
-                    {
-                        loader: 'sass-loader',
-                        options: {
-                            implementation: require('dart-sass')
-                        }
-                    }
-                ]
-            },
-            {
-                test: /\.(png|jpg|gif|woff|svg|ttf)$/,
-                use: [
-                    'file-loader'
-                ]
+              loader: 'sass-loader',
+              options: {
+                implementation: require('dart-sass')
+              }
             }
-        ]
+          ]
+        },
+        {
+          test: /\.(png|jpg|gif|woff|svg|ttf)$/,
+          use: [
+            'file-loader'
+          ]
+        }
+      ]
     },
     plugins: [
-        new HtmlWebpackPlugin({
-            template: path.join(__dirname, "public/index.html"),
-            title: "rt-demo",
-            filename: "index.html"
-        }),
-        new DashboardPlugin(dashboard.setData)
+      new HtmlWebpackPlugin({
+        template: "public/index.html",
+        favicon: "public/favicon.ico",
+        filename: "index.html",
+        title: appConfig.title,
+      }),
+      new CleanWebpackPlugin(),
+      new DefinePlugin({
+          'process.env': {
+            NODE_ENV: JSON.stringify(NODE_ENV),
+            ENV_CONFIG: JSON.stringify(envConfig[NODE_ENV]),
+            APP_CONFIG: JSON.stringify(appConfig)
+          },
+      })
     ],
-    // devtool: "inline-source-map",
-    devtool: "nosources-source-map",
+    devtool: isDevelopment ? "inline-source-map" : "nosources-source-map",
     devServer: {
-        contentBase: path.resolve(__dirname, buildPath),
-        compress: true,
-        port: 9696
+      contentBase: path.resolve(__dirname, buildPath),
+      compress: true,
+      port: 3000
     }
+  }
 }

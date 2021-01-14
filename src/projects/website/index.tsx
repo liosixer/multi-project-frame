@@ -12,6 +12,7 @@ const Root = document.getElementById("root");
 
 const Test = () => <div className="test">门户网</div>;
 
+
 const { ENV_CONFIG } = process.env;
 console.log(ENV_CONFIG);
 

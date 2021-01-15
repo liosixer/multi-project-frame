@@ -13,7 +13,8 @@ module.exports = env => {
   console.log(chalk.yellow(`当前环境变量：${NODE_ENV}; APP:${APP}`));
   
   const isDevelopment = NODE_ENV == "development";
-  const appConfig = require(`./config/${APP}`);
+  //动态加载相关项目模块的配置文件
+  const appConfig = require(`./config/projects/${APP}`);
   const envConfig = require("./config/env");
   return {
     entry: path.resolve(__dirname, `src/projects/${APP}/index.tsx`),

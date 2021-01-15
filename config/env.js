@@ -6,7 +6,6 @@ const config = {
   production: {
     ip: 'www.jd.com',
     port: "8080",
-
   }
 };
 module.exports = config;

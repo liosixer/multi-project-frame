@@ -1,5 +1,5 @@
 //代理，有单独的后端开发服务器 API，并且希望在同域名下发送 API 请求
-const static_options = [{}];
+const static_options = [];
 
 /** 
  * 生成代理
@@ -11,13 +11,13 @@ const static_options = [{}];
  * @param {boolean} option.changeOrigin - changes the origin of the host header to the target URL
  * 
  *  **/
-function getProxy(options){
+function getProxy(options = []){
     const result = {};
     for (let index = 0; index < options.length; index++) {
         const { title, target, pathRewrite } = options[index];
-        result.title = {target, pathRewrite, changeOrigin?: true, ws };
+        result.title = { target, pathRewrite, changeOrigin, ws };
     }
-    return result
+    return result;
 }
 
 module.exports = { getProxy, static_options };

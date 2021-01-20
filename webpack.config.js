@@ -82,7 +82,10 @@ module.exports = env => {
     devServer: {
       contentBase: path.resolve(__dirname, buildPath),
       compress: true,
-      port: 3000
+      port: 3000,
+      stats: "errors-only",
+      open: true,
+      
     }
   }
 }

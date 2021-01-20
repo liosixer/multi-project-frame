@@ -16,6 +16,8 @@ module.exports = env => {
   //动态加载相关项目模块的配置文件
   const appConfig = require(`./config/projects/${APP}`);
   const envConfig = require("./config/env");
+  const { getProxy, static_options } = require('./config/proxy');
+  const proxy = getProxy(static_options);
   return {
     entry: path.resolve(__dirname, `src/projects/${APP}/index.tsx`),
     output: {
@@ -85,7 +87,7 @@ module.exports = env => {
       port: 3000,
       stats: "errors-only",
       open: true,
-      
+      proxy
     }
   }
 }

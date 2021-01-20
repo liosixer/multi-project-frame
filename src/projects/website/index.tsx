@@ -13,8 +13,10 @@ const Root = document.getElementById("root");
 const Test = () => <div className="test">门户网</div>;
 
 
-const { ENV_CONFIG } = process.env;
+const { ENV_CONFIG, APP_CONFIG } = process.env;
 console.log(ENV_CONFIG);
+console.log(APP_CONFIG);
+
 
 ReactDOM.render(
     <Router>

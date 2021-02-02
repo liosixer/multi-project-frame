@@ -6,6 +6,8 @@ const { DefinePlugin, optimize } = require("webpack");
 
 const path = require("path");
 const chalk = require("chalk");
+const VueLoaderPlugin = require("vue-loader/lib/plugin");
+// const { VueLoaderPlugin } = require("node_modules/vue-loader/lib/index");
 const buildPath = "dist";
 
 module.exports = env => {
@@ -19,7 +21,7 @@ module.exports = env => {
   const { getProxy, static_options } = require('./config/proxy');
   const proxy = getProxy(static_options);
   return {
-    entry: path.resolve(__dirname, `src/projects/${APP}/index.tsx`),
+    entry: path.resolve(__dirname, `src/projects/${APP}/index.js`),
     output: {
       path: path.resolve(__dirname, `${buildPath}/${APP}`),
       filename: "[name].[chunkhash:4].js"
@@ -55,6 +57,12 @@ module.exports = env => {
           use: [
             'file-loader'
           ]
+        },
+        {
+          test: /\.vue$/, 
+          use: {
+            loader: "vue-loader"
+          }
         }
       ]
     },
@@ -78,7 +86,8 @@ module.exports = env => {
             ENV_CONFIG: JSON.stringify(envConfig[NODE_ENV]),
             APP_CONFIG: JSON.stringify(appConfig)
           },
-      })
+      }),
+      new VueLoaderPlugin(),
     ],
     devtool: isDevelopment ? "inline-source-map" : "nosources-source-map",
     devServer: {

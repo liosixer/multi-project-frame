@@ -80,7 +80,7 @@ module.exports = env => {
           },
       })
     ],
-    devtool: isDevelopment ? "inline-source-map" : "nosources-source-map",
+    devtool: isDevelopment ? "source-map" : "nosources-source-map",
     devServer: {
       contentBase: path.resolve(__dirname, buildPath),
       compress: true,

@@ -11,7 +11,7 @@ const portfinder = require("portfinder");
 
 const excuteWebpackConfig = (env, port) => {
   const { NODE_ENV, APP } = env;
-  console.log(chalk.yellow(`当前环境变量：${NODE_ENV}; APP:${APP}`));
+  console.log(chalk.yellow(`[环境变量：${NODE_ENV}]  [应用:${APP}]`));
   
   const isDevelopment = NODE_ENV == "development";
   //动态加载相关项目模块的配置文件

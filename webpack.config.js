@@ -7,8 +7,9 @@ const { DefinePlugin, optimize } = require("webpack");
 const path = require("path");
 const chalk = require("chalk");
 const buildPath = "dist";
+const portfinder = require("portfinder");
 
-module.exports = env => {
+const excuteWebpackConfig = (env, port) => {
   const { NODE_ENV, APP } = env;
   console.log(chalk.yellow(`当前环境变量：${NODE_ENV}; APP:${APP}`));
   
@@ -84,10 +85,24 @@ module.exports = env => {
     devServer: {
       contentBase: path.resolve(__dirname, buildPath),
       compress: true,
-      port: 3000,
       stats: "errors-only",
       open: true,
+      port,
       proxy
     }
   }
+}
+
+
+module.exports = env => {
+  return new Promise((resolve, reject) => {
+    // 扫描端口们
+    portfinder.getPort({ port: 3000, stopPort: 3999 }, (err, port) => {
+      if (err) {
+        reject();
+      } else {
+        resolve(excuteWebpackConfig(env, port));
+      }
+    });
+  })
 }

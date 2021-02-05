@@ -3,17 +3,17 @@ const {
   CleanWebpackPlugin
 } = require("clean-webpack-plugin");
 const { DefinePlugin, optimize } = require("webpack");
+const portfinder = require('portfinder');
 
 const path = require("path");
 const chalk = require("chalk");
 const VueLoaderPlugin = require("vue-loader/lib/plugin");
-// const { VueLoaderPlugin } = require("node_modules/vue-loader/lib/index");
 const buildPath = "dist";
 
-module.exports = env => {
+const excuteWebpackConfig = (env, port) => {
   const { NODE_ENV, APP } = env;
-  console.log(chalk.yellow(`当前环境变量：${NODE_ENV}; APP:${APP}`));
-  
+  console.log(chalk.yellow(`[运行环境：${NODE_ENV}] [项目：${APP}] [端口号：${port}] `));
+
   const isDevelopment = NODE_ENV == "development";
   //动态加载相关项目模块的配置文件
   const appConfig = require(`./config/projects/${APP}`);
@@ -33,37 +33,37 @@ module.exports = env => {
     },
     module: {
       rules: [{
-          test: /\.(js|ts)x?$/,
-          exclude: /(node_modules)/,
-          use: {
-            loader: "babel-loader"
-          }
-        },
-        {
-          test: /\.(c|sc|sa)ss$/,
-          use: [
-            'style-loader',
-            'css-loader',
-            {
-              loader: 'sass-loader',
-              options: {
-                implementation: require('dart-sass')
-              }
-            }
-          ]
-        },
-        {
-          test: /\.(png|jpg|gif|woff|svg|ttf)$/,
-          use: [
-            'file-loader'
-          ]
-        },
-        {
-          test: /\.vue$/, 
-          use: {
-            loader: "vue-loader"
-          }
+        test: /\.(js|ts)x?$/,
+        exclude: /(node_modules)/,
+        use: {
+          loader: "babel-loader"
         }
+      },
+      {
+        test: /\.(c|sc|sa)ss$/,
+        use: [
+          'style-loader',
+          'css-loader',
+          {
+            loader: 'sass-loader',
+            options: {
+              implementation: require('dart-sass')
+            }
+          }
+        ]
+      },
+      {
+        test: /\.(png|jpg|gif|woff|svg|ttf)$/,
+        use: [
+          'file-loader'
+        ]
+      },
+      {
+        test: /\.vue$/,
+        use: {
+          loader: "vue-loader"
+        }
+      }
       ]
     },
     plugins: [
@@ -81,22 +81,36 @@ module.exports = env => {
         entryChunkMultiplicator: 1
       }),
       new DefinePlugin({
-          'process.env': {
-            NODE_ENV: JSON.stringify(NODE_ENV),
-            ENV_CONFIG: JSON.stringify(envConfig[NODE_ENV]),
-            APP_CONFIG: JSON.stringify(appConfig)
-          },
+        'process.env': {
+          NODE_ENV: JSON.stringify(NODE_ENV),
+          ENV_CONFIG: JSON.stringify(envConfig[NODE_ENV]),
+          APP_CONFIG: JSON.stringify(appConfig)
+        },
       }),
       new VueLoaderPlugin(),
     ],
-    devtool: isDevelopment ? "source-map" : "nosources-source-map",
+    devtool: isDevelopment ? "inline-source-map" : "nosources-source-map",
     devServer: {
       contentBase: path.resolve(__dirname, buildPath),
       compress: true,
-      port: 3000,
+      port: port,
       stats: "errors-only",
       open: true,
       proxy
     }
-  }
+  };
 }
+
+module.exports = env => {
+  return new Promise((resolve, reject) => {
+    // 扫描端口们
+    portfinder.getPort({ port: 3000, stopPort: 3999 }, (err, port) => {
+      if (err) {
+        reject();
+      } else {
+        resolve(excuteWebpackConfig(env, port));
+      }
+    });
+  })
+}
+

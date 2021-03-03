@@ -5,8 +5,8 @@ module.exports = {
             {
                 useBuiltIns: 'usage',
                 corejs: 3
-            },
+            }
         ],
-        '@babel/preset-typescript'
+        ['@babel/preset-typescript']
     ]
 }

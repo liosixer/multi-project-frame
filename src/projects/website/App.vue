@@ -34,8 +34,6 @@ export default {
     mounted() {},
     methods: {
         onflatClick(type) {
-            // console.log(MyTestableClass.isTestable)
-
             /**
              * 1. 多维数组转化为1维 [flat] 扁平化处理
              *      类似可以推导 reduce 的性能分析

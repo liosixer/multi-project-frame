@@ -52,7 +52,7 @@ export default {
 
         complexityCalc(type) {
             /**
-             * 2. 时间复杂度， 空间复杂度
+             * 2. 时间复杂度
              * **/
             const go = (n) => {
                 let total = 0;
@@ -71,6 +71,8 @@ export default {
             } else {
                 go2(1000)
             }
+
+            // 空间复杂度： Array ， HashMap  查找数据
 
             this.timegap = Date.now() - pre;
         },

@@ -1,11 +1,16 @@
 <template>
     <div>
         {{ test }}
-        <h1>扁平化</h1>
-        <h2>时间间隔： {{ timegap }}</h2>
+        <h1>数组扁平化</h1>
+        <h2>间隔时间： {{ timegap }}</h2>
         <h3 @click="onflatClick(1)">flat</h3>
         <h3 @click="onflatClick(2)">flatByJs</h3>
         <h3 @click="onflatClick(3)">flatByJs(逆序)</h3>
+
+        <h1>时间/空间复杂度</h1>
+        <h2>间隔时间： {{ timegap }}</h2>
+        <h3 @click="complexityCalc(1)">时间复杂度</h3>
+        <h3 @click="complexityCalc(2)">空间复杂度</h3>
     </div>
 </template>
 
@@ -32,15 +37,8 @@ export default {
             // console.log(MyTestableClass.isTestable)
 
             /**
-             * 1. map & object 区别， 优劣
-             * ***/
-
-            /**
-             * 2. 多维数组转化为1维 [flat] 扁平化处理
-             * **/
-
-            /**
-             * 3. reduce 性能分析
+             * 1. 多维数组转化为1维 [flat] 扁平化处理
+             *      类似可以推导 reduce 的性能分析
              * **/
 
             const pre = Date.now();
@@ -51,6 +49,31 @@ export default {
             } else {
                 flatByJs(this.list, false);
             }
+            this.timegap = Date.now() - pre;
+        },
+
+        complexityCalc(type) {
+            /**
+             * 2. 时间复杂度， 空间复杂度
+             * **/
+            const go = (n) => {
+                let total = 0;
+                for (let i = 1; i <= n; i++) {
+                    total += i;
+                }
+                return total;
+            };
+
+            const go2 = (n) => {
+                return ((1 + n) * n) / 2;
+            };
+            const pre = Date.now();
+            if (type == 1) {
+                go(1000);
+            } else {
+                go2(1000)
+            }
+
             this.timegap = Date.now() - pre;
         },
     },

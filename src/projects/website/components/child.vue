@@ -11,7 +11,7 @@
         extends: parent,
 
         created() {
-            console.log("我是孩子");
+            // console.log("我是孩子");
         }
     }
 </script>

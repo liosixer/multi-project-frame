@@ -1,7 +1,7 @@
 <template>
     <div>
         {{ test }}
-        <h1>数组扁平化</h1>
+        <!-- <h1>数组扁平化</h1>
         <h2>间隔时间： {{ timegap }}</h2>
         <h3 @click="onflatClick(1)">flat</h3>
         <h3 @click="onflatClick(2)">flatByJs</h3>
@@ -10,11 +10,8 @@
         <h1>时间/空间复杂度</h1>
         <h2>间隔时间： {{ timegap }}</h2>
         <h3 @click="complexityCalc(1)">时间复杂度</h3>
-        <h3 @click="complexityCalc(2)">空间复杂度</h3>
-
-
+        <h3 @click="complexityCalc(2)">空间复杂度</h3> -->
         <child />
-        
     </div>
 </template>
 

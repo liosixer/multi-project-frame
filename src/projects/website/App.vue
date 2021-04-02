@@ -11,13 +11,21 @@
         <h2>间隔时间： {{ timegap }}</h2>
         <h3 @click="complexityCalc(1)">时间复杂度</h3>
         <h3 @click="complexityCalc(2)">空间复杂度</h3>
+
+
+        <child />
+        
     </div>
 </template>
 
 <script>
 // import MyTestableClass from './libs';
 import { initalArray, flat, flatByJs } from "./libs/flat";
+// import ComChild from "./components/child";
+import Child from './components/child.vue';
 export default {
+
+    components: {Child},
     data() {
         return {
             test: "门户网",

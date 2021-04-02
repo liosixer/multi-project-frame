@@ -1,0 +1,5 @@
+/dist/
+*.js
+/public/
+/assets/
+/util/utils.js

@@ -26,6 +26,7 @@ const excuteWebpackConfig = (env, port) => {
       path: path.resolve(__dirname, `${buildPath}/${APP}`),
       filename: "[name].[chunkhash:4].js"
     },
+    extensions: ['.js', '.vue', '.json'],
     resolve: {
       alias: {
         "@": path.resolve(__dirname, "src"),

@@ -1,13 +1,19 @@
 {
     "compilerOptions": {
-        "experimentalDecorators": true,
-        "target": "es6",
         "baseUrl": ".",
-        "paths": {
-            "@/": ["./src/"]
-        }
-    },
-    "exclude": [
-        "./node_modules/"
-    ]
+        "paths": {  //添加引入alias name ‘@’
+          "@/*": [
+            "src/*"
+          ]
+        },
+        "target": "es6",
+        "module": "commonjs",
+        "allowSyntheticDefaultImports": true
+      },
+      "include": [
+        "src/**/*"
+      ],
+      "exclude": [
+        "node_modules"
+      ]
 }

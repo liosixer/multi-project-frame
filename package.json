@@ -35,10 +35,8 @@
     "scripts": {
         "website": "cross-env webpack-dev-server --env.NODE_ENV=development --env.APP=website",
         "purchase": "cross-env webpack-dev-server --env.NODE_ENV=development --env.APP=purchase",
-        
         "build:website": "cross-env webpack --env.NODE_ENV=production --env.APP=website",
         "build:purchase": "cross-env webpack --env.NODE_ENV=production --env.APP=purchase",
-
         "test:website": "cross-env webpack --env.NODE_ENV=test --env.APP=website"
     },
     "dependencies": {
@@ -47,6 +45,7 @@
         "core-js": "^3.8.2",
         "regenerator-runtime": "^0.13.7",
         "vue": "^2.6.12",
-        "vue-loader": "^15.9.6"
+        "vue-loader": "^15.9.6",
+        "vue-router": "3.1.6"
     }
 }

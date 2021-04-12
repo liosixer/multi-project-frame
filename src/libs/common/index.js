@@ -2,5 +2,4 @@
 
 export { default as Fill } from "./fill";
 export { default as Identity } from "./identity";
-export { default as Serialize } from "./serialize";
 

@@ -1,27 +1,18 @@
 <template>
-    <div>
-        {{ test }}
+    <div id="app">
+        <router-view></router-view>
     </div>
 </template>
 
 <script>
 export default {
-    
     components: {},
     data() {
-        return {
-            test: "门户网",
-            timegap: 0,
-            list: [],
-        };
+        return {};
     },
-
-    created() {
-    },
-
+    created() {},
     mounted() {},
-    methods: {
-    },
+    methods: {},
 };
 </script>
 
